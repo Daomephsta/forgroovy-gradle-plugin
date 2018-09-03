@@ -1,0 +1,37 @@
+apply plugin: 'groovy'
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'maven-publish'
+
+version = '0.0.1'
+group = "daomephsta.forgroovy.gradleplugin" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "ForgroovyGradlePlugin"
+
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+repositories {
+	jcenter()
+	maven { 
+	    name = 'Forge'
+	    url = 'http://files.minecraftforge.net/maven'
+	}	
+}
+
+publishing {
+	publications {
+		forgroovyGradlePlugin(MavenPublication) {
+			from components.java
+		}
+	}
+}
+
+dependencies {
+	//Groovy
+	compile localGroovy()
+	//Gradle API
+	compile gradleApi()
+	//ForgeGradle
+	compile "net.minecraftforge.gradle:ForgeGradle:${project.forgeGradleVersion}"
+}
